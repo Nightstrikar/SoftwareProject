@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% extends "base.html"%} {% block title %}Pomodoro Timer{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+</head>
+<body>
+<div class="container">
+
+        <!-- Button trigger modal -->
+        <div style="text-align: center; bottom: 15;">
+        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#task-modal" data-source="New Task">New Event</button>
+        </div>
+
+
+        <div class="modal fade" id="task-modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Label">Event Creation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <form method="POST">
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="task-form-display">Event</span>
+                            <input type="text" class="form-control" placeholder="Event Description" name="event-name" id="event-name" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="taskFormDisplay">Date</span>
+                            <input type="text" class="form-control" placeholder="YYYY-MM-DD" name="event-date" id="event-date" aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Event</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+
+</div>
+    <div id="calendar"></div>
+    <script>
+        let calendarEl = document.getElementById
+        ('calendar');
+
+        let calendar = new FullCalendar.Calendar
+        (calendarEl, {
+            events : [
+                {% for event in user.calendarEvent %}
+                {
+                title : '{{event.inputEvent}}',
+                start : '{{event.inputDate}}',
+                },
+                {% endfor %}
+            ]
+        });
+
+        calendar.render();
+    </script>
+
+</body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</html>
+
+{% endblock %}
